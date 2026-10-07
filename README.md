@@ -10,62 +10,57 @@ It lets Claude work in your live Lynkgrids workspace: LinkedIn leads, people and
 - Works in Claude Code, Claude Desktop, and claude.ai
 - Nothing that reaches a real person goes out without your yes
 
-## Get an API key
-
-In Lynkgrids, open **Settings → Workspace → API keys** and create a **Read & write** key. It starts with `lgk_live_`. Keep it out of chat, files, and commits.
-
 ## Install in Claude Code
 
-1. Put the key in your environment:
-
-   ```bash
-   export LYNKGRIDS_API_KEY=lgk_live_your_key
-   ```
-
-   On Windows PowerShell: `setx LYNKGRIDS_API_KEY "lgk_live_your_key"`, then open a new terminal.
-
-2. Install the plugin:
+1. Install the plugin:
 
    ```
    /plugin marketplace add lynkread/Lynkgrids-AI-for-Claude
    /plugin install lynkgrids@lynkgrids-ai
    ```
 
+2. Sign in. Run `/mcp`, pick **lynkgrids**, and choose **Authenticate**. A Lynkgrids page opens in your browser: sign in (or create an account) and approve the connection. Claude Code picks up the access automatically and refreshes it for you.
+
+   If the page asks for an API key, create one in Lynkgrids under **Settings → Workspace → API keys** (Read & write) and paste it into that browser page, never into Claude.
+
 3. Run `/lynkgrids:setup` to check the connection and finish workspace setup.
-
-The plugin's `.mcp.json` sends the key as `Authorization: Bearer ${LYNKGRIDS_API_KEY}`.
-
-### MCP only, without the plugin
-
-```bash
-claude mcp add --transport http lynkgrids https://mcp.lynkgrids.com/mcp --header "Authorization: Bearer lgk_live_your_key"
-```
 
 ## Install in claude.ai or Claude Desktop
 
 1. Open **Settings → Connectors → Add custom connector**.
 2. Name it `Lynkgrids` and use the URL `https://mcp.lynkgrids.com/mcp`.
-3. Connect. A Lynkgrids page asks for your API key once.
+3. Click **Connect** and sign in on the Lynkgrids page that opens.
 
 To load the skill as well, upload `skills/lynkgrids/` as a skill in **Settings → Capabilities → Skills**.
 
 ## Other MCP clients
 
-Any client that speaks streamable HTTP works:
+Any client that supports MCP OAuth over streamable HTTP only needs the URL:
 
 ```json
 {
   "mcpServers": {
     "lynkgrids": {
       "type": "http",
-      "url": "https://mcp.lynkgrids.com/mcp",
-      "headers": {
-        "Authorization": "Bearer lgk_live_your_key"
-      }
+      "url": "https://mcp.lynkgrids.com/mcp"
     }
   }
 }
 ```
+
+## Fallback: connect with an API key
+
+For clients without browser sign-in (CI, headless servers, older tools), create a **Read & write** key in Lynkgrids under **Settings → Workspace → API keys** and send it as a header:
+
+```bash
+claude mcp add --transport http lynkgrids-key https://mcp.lynkgrids.com/mcp --header "Authorization: Bearer lgk_live_your_key"
+```
+
+```json
+"headers": { "Authorization": "Bearer lgk_live_your_key" }
+```
+
+Keep the key out of chat, files, and commits. If you use this in Claude Code alongside the plugin, disable the plugin's `lynkgrids` server in `/mcp` so the tools don't appear twice.
 
 ## What's in the plugin
 

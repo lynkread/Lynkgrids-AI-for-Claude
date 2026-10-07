@@ -71,4 +71,9 @@ Never send a message, launch a campaign, activate a workflow, or import leads be
 
 ## Setup
 
-The tools are missing when the MCP isn't connected. The key comes from Lynkgrids → **Settings → Workspace → API keys** (Read & write). In Claude Code it is read from `LYNKGRIDS_API_KEY`; in claude.ai and Claude Desktop the connector's sign-in flow asks for it once. Never paste the key into chat, files, or commits.
+The tools are missing, or calls fail with an auth error, when the user hasn't signed in. Sign-in happens in the browser:
+
+- **Claude Code:** run `/mcp`, pick **lynkgrids**, choose **Authenticate**, and sign in on the Lynkgrids page that opens.
+- **claude.ai / Claude Desktop:** Settings → Connectors → Lynkgrids → **Connect**.
+
+New users can create their Lynkgrids account on that same page. If the page asks for an API key, it comes from Lynkgrids → **Settings → Workspace → API keys** (Read & write) and is pasted into the browser page, never into chat. If the user pastes a key into chat anyway, don't repeat or store it, and suggest rotating it.
