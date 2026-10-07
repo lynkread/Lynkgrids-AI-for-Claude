@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "lynkgrids": {
+      "type": "http",
+      "url": "https://mcp.lynkgrids.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${LYNKGRIDS_API_KEY}"
+      }
+    }
+  }
+}

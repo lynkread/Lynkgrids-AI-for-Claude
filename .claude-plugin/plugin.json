@@ -1,0 +1,14 @@
+{
+  "name": "lynkgrids",
+  "displayName": "Lynkgrids AI",
+  "version": "1.0.0",
+  "description": "Connect Claude to your Lynkgrids workspace. Find and import LinkedIn leads, enrich people and companies, run campaigns and workflows, triage replies, and manage pipelines through the hosted MCP at mcp.lynkgrids.com.",
+  "author": {
+    "name": "Lynkgrids",
+    "url": "https://lynkgrids.com"
+  },
+  "homepage": "https://lynkgrids.com",
+  "repository": "https://github.com/lynkread/Lynkgrids-AI-for-Claude",
+  "license": "MIT",
+  "keywords": ["mcp", "sales", "outbound", "linkedin", "leads", "crm", "gtm", "prospecting", "pipeline", "lynkgrids"]
+}

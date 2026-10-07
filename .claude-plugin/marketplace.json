@@ -1,0 +1,25 @@
+{
+  "name": "lynkgrids-ai",
+  "owner": {
+    "name": "Lynkgrids",
+    "url": "https://lynkgrids.com"
+  },
+  "metadata": {
+    "description": "Official Lynkgrids plugin for Claude: your LinkedIn CRM, leads, campaigns, and replies through the hosted Lynkgrids MCP."
+  },
+  "plugins": [
+    {
+      "name": "lynkgrids",
+      "source": "./",
+      "description": "Work in your live Lynkgrids workspace from Claude: leads, people, companies, campaigns, workflows, agents, and replies.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Lynkgrids"
+      },
+      "homepage": "https://lynkgrids.com",
+      "license": "MIT",
+      "keywords": ["mcp", "sales", "linkedin", "crm", "lynkgrids"],
+      "category": "productivity"
+    }
+  ]
+}
