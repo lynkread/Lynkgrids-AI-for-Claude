@@ -8,6 +8,7 @@ It lets Claude work in your live Lynkgrids workspace: LinkedIn leads, people and
 
 - MCP endpoint: `https://mcp.lynkgrids.com/mcp`
 - Works in Claude Code, Claude Desktop, and claude.ai
+- Sign up, pick a plan, and connect in one browser flow, with no key to copy
 - Nothing that reaches a real person goes out without your yes
 
 ## Install in Claude Code
@@ -19,9 +20,18 @@ It lets Claude work in your live Lynkgrids workspace: LinkedIn leads, people and
    /plugin install lynkgrids@lynkgrids-ai
    ```
 
-2. Sign in. Run `/mcp`, pick **lynkgrids**, and choose **Authenticate**. A Lynkgrids page opens in your browser: sign in (or create an account) and approve the connection. Claude Code picks up the access automatically and refreshes it for you.
+2. Sign in.
 
-   If the page asks for an API key, create one in Lynkgrids under **Settings → Workspace → API keys** (Read & write) and paste it into that browser page, never into Claude.
+   Run `/mcp`, pick **lynkgrids**, and choose **Authenticate**. Your browser opens the Lynkgrids connect page:
+
+   1. Click **Continue to Lynkgrids**.
+   2. Sign in, or create an account and confirm your email.
+   3. If your workspace has no plan yet, pick one or start a trial. Payment is handled by Razorpay, in the browser.
+   4. Click **Allow**.
+
+   Lynkgrids creates a Read & write key named "Claude" for the connection and sends you back. Claude Code keeps the access refreshed. You never copy a key.
+
+   Already have an API key? Choose **Use an API key instead** on the connect page and paste it there, never into Claude.
 
 3. Run `/lynkgrids:setup` to check the connection and finish workspace setup.
 
@@ -29,7 +39,7 @@ It lets Claude work in your live Lynkgrids workspace: LinkedIn leads, people and
 
 1. Open **Settings → Connectors → Add custom connector**.
 2. Name it `Lynkgrids` and use the URL `https://mcp.lynkgrids.com/mcp`.
-3. Click **Connect** and sign in on the Lynkgrids page that opens.
+3. Click **Connect**. On the page that opens, click **Continue to Lynkgrids**, sign in or create an account, pick a plan if you don't have one, and click **Allow**.
 
 To load the skill as well, upload `skills/lynkgrids/` as a skill in **Settings → Capabilities → Skills**.
 
@@ -61,6 +71,17 @@ claude mcp add --transport http lynkgrids-key https://mcp.lynkgrids.com/mcp --he
 ```
 
 Keep the key out of chat, files, and commits. If you use this in Claude Code alongside the plugin, disable the plugin's `lynkgrids` server in `/mcp` so the tools don't appear twice.
+
+## Plans and billing
+
+The connector works on a workspace with an active plan or trial.
+
+- **No plan yet:** the sign-in page takes you through the plan picker before you click Allow.
+- **Plan ended:** the workspace turns read-only. Lookups still work; anything that changes or sends something is refused, with a link to renew.
+- **Limits and features:** if an action hits a plan limit, or uses a feature your plan doesn't include, Claude shows the message and a link to upgrade.
+- **Upgrade any time:** ask "upgrade my plan" or "what plan am I on?". Claude calls `get_subscription_link` and gives you your billing link and plan status.
+
+Payment always happens in your browser, on the Lynkgrids billing page. Claude never asks for or enters card details. If you came through a Lynkgrids partner, the links point to your partner's app and billing.
 
 ## What's in the plugin
 

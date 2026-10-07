@@ -36,6 +36,7 @@ These tools don't change anything. Use them to answer questions:
 - `list_stages`, `list_custom_fields`, `list_tasks`
 - `campaign_progress`, `agent_list`, `get_agent`, `agent_settings`
 - `pending_replies`, `conversation_history`, `list_follow_ups`, `waiting_for_me`, `unanswered_questions`
+- `get_subscription_link`: the user's billing link and plan status, for subscribe / upgrade / renew
 - `search_knowledge`, `list_knowledge`: call `search_knowledge` before drafting any message or reply, and state only facts it returns
 
 ## Confirm before you change anything
@@ -68,12 +69,13 @@ Never send a message, launch a campaign, activate a workflow, or import leads be
 - **"Invalid parameters" on a connection request** is usually the weekly invite cap, not a bad payload. Stop sending invites and tell the user.
 - **Seat ownership.** You can only send from a seat the user owns or is assigned. Acting as a teammate needs `actAsUserId` through `lynkgrids_request`, and only for admins.
 - **Daily limits.** Check `todays_plan` before adding volume.
+- **Plans.** If a tool says the workspace has no plan, its plan has ended (read-only), a limit was reached, or a feature isn't on the plan, show that message and its link to the user, and stop changing things; don't retry. When the user asks to subscribe, upgrade, renew, or see their plan, call `get_subscription_link` and share the link. Payment always happens in the browser: never ask for, accept, or enter card details.
 
 ## Setup
 
 The tools are missing, or calls fail with an auth error, when the user hasn't signed in. Sign-in happens in the browser:
 
-- **Claude Code:** run `/mcp`, pick **lynkgrids**, choose **Authenticate**, and sign in on the Lynkgrids page that opens.
+- **Claude Code:** run `/mcp`, pick **lynkgrids**, and choose **Authenticate**.
 - **claude.ai / Claude Desktop:** Settings → Connectors → Lynkgrids → **Connect**.
 
-New users can create their Lynkgrids account on that same page. If the page asks for an API key, it comes from Lynkgrids → **Settings → Workspace → API keys** (Read & write) and is pasted into the browser page, never into chat. If the user pastes a key into chat anyway, don't repeat or store it, and suggest rotating it.
+On the page that opens, the user clicks **Continue to Lynkgrids**, signs in or creates an account, picks a plan if the workspace has none (paid in the browser), and clicks **Allow**. Lynkgrids then creates the connector's key itself. Someone who already has a Read & write API key can choose **Use an API key instead** on that page and paste it there, never into chat. If the user pastes a key into chat anyway, don't repeat or store it, and suggest rotating it.
